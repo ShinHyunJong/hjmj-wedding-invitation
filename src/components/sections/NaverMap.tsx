@@ -54,9 +54,10 @@ export default function NaverMap({ coords, address, title, onCoords, fallback }:
 
   if (status === "failed") return <>{fallback}</>;
 
+  // 지도 div 자체에 높이를 준다 (SDK 가 컨테이너 position 을 바꾸므로 absolute inset-0 으로는 높이가 0이 된다).
   return (
-    <div className="relative aspect-[4/3] w-full bg-bg-tint">
-      <div ref={ref} className="absolute inset-0" aria-label={`${title} 지도`} role="img" />
+    <div className="relative w-full bg-bg-tint">
+      <div ref={ref} className="aspect-[4/3] w-full" aria-label={`${title} 지도`} role="img" />
       {status === "loading" && (
         <div className="absolute inset-0 flex items-center justify-center text-[13px] text-text-muted" aria-hidden>
           지도를 불러오는 중…
