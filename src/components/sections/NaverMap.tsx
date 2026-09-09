@@ -41,7 +41,16 @@ export default function NaverMap({ coords, address, title, onCoords, fallback }:
         mapDataControl: false,
         logoControlOptions: { position: maps.Position.BOTTOM_LEFT },
       });
-      new maps.Marker({ position: center, map, title });
+      const marker = new maps.Marker({ position: center, map, title });
+      // 마커 위 장소명 라벨 (기본 InfoWindow 프레임은 없애고 우리 스타일의 알약 형태로)
+      const label = new maps.InfoWindow({
+        content: `<div style="padding:6px 12px;border:1px solid #e7d4d6;border-radius:999px;background:#fff;color:#231f20;font:500 13px/1.4 'SUIT Variable','Apple SD Gothic Neo',sans-serif;white-space:nowrap;box-shadow:0 2px 8px rgba(35,31,32,.12)">${title}</div>`,
+        borderWidth: 0,
+        backgroundColor: "transparent",
+        disableAnchor: true,
+        pixelOffset: new maps.Point(0, -6),
+      });
+      label.open(map, marker);
       setStatus("ready");
       onCoords?.(c);
     })();

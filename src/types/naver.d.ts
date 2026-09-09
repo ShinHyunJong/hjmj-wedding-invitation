@@ -12,6 +12,16 @@ interface NaverMapsNamespace {
     options: { center: NaverLatLng; zoom?: number; scrollWheel?: boolean; draggable?: boolean; pinchZoom?: boolean; zoomControl?: boolean; mapDataControl?: boolean; logoControlOptions?: { position: number } },
   ) => { setCenter(latlng: NaverLatLng): void };
   Marker: new (options: { position: NaverLatLng; map?: unknown; title?: string }) => { setMap(map: unknown): void };
+  InfoWindow: new (options: {
+    content: string;
+    borderWidth?: number;
+    backgroundColor?: string;
+    disableAnchor?: boolean;
+    pixelOffset?: unknown;
+    anchorSize?: unknown;
+  }) => { open(map: unknown, marker: unknown): void };
+  Point: new (x: number, y: number) => unknown;
+  Size: new (w: number, h: number) => unknown;
   Position: { BOTTOM_LEFT: number; BOTTOM_RIGHT: number };
   Service: {
     Status: { OK: string; ERROR: string };
