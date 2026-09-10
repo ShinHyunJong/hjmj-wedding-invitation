@@ -1,9 +1,11 @@
 /**
  * 갤러리 노출 순서.
  * - manifest는 scripts/optimize-photos.ts 가 생성한다 (직접 수정 금지).
- * - 순서를 바꾸려면 아래 ORDER 배열만 편집한다. ORDER에 없는 사진은 뒤에 id 순으로 붙는다.
+ * - 갤러리는 ORDER 앞에서 GALLERY_COUNT 장만 보여준다 (2026-09-10 사용자 결정: 전부 보여줄 필요 없음).
+ *   ORDER 가 부족하면 EXCLUDE 에 없는 나머지가 id 순으로 채운다.
  * - 특정 사진을 빼려면 EXCLUDE에 id를 넣는다.
  */
+export const GALLERY_COUNT = 20;
 import manifest from "./gallery.generated.json";
 
 export interface GalleryPhoto {
@@ -32,6 +34,14 @@ const ORDER: string[] = [
   "MS_00665", // 클래식카 (가로)
   "YS_03217", // 다크 배경 신부
   "YS_05638", // 정원 샴페인
+  "YS_03061", // 다크 스튜디오 둘
+  "YS_00365", // 소파에 앉은 둘
+  "MS_02165", // 클래식카 옆 신랑
+  "YS_00256", // 누운 신부
+  "YS_04403", // 클래식카 위 신부
+  "YS_05012", // 강아지와 신부 (가로)
+  "YS_02743", // 강아지와 셋, 화이트
+  "YS_03038", // 손등 키스
 ];
 
 /**
@@ -75,10 +85,13 @@ export const FEATURED = {
 
 const byId = new Map(manifest.map((p) => [p.id, p as GalleryPhoto]));
 
+/** 갤러리에 보여줄 사진 (GALLERY_COUNT 장) */
 export const gallery: GalleryPhoto[] = [
   ...ORDER.map((id) => byId.get(id)).filter((p): p is GalleryPhoto => Boolean(p)),
   ...(manifest as GalleryPhoto[]).filter((p) => !ORDER.includes(p.id)),
-].filter((p) => !EXCLUDE.includes(p.id));
+]
+  .filter((p) => !EXCLUDE.includes(p.id))
+  .slice(0, GALLERY_COUNT);
 
 export function photo(id: string): GalleryPhoto {
   const p = byId.get(id);
