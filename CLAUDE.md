@@ -177,6 +177,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
   - id는 파일명 첫 토큰 (`YS_01595 첫장---.jpg` → `YS_01595`). 이미 있는 결과물은 건너뛰며 `--force`로 재생성.
 - 원본 폴더 `weddingPhoto/`와 `assets/`는 **git에 커밋하지 않는다** (`.gitignore` 등록됨). 최적화 결과물만 커밋.
 - 갤러리 순서는 `src/config/gallery.ts`의 `ORDER` 배열로, 제외는 `EXCLUDE`로 관리. 파일명의 `순서1~4`, `첫장` 표기는 사진관의 앨범 배치 힌트일 뿐이므로 초기값으로만 반영했다.
+- **중복 방지 규칙(2026-09-10)**: 섹션 대표 사진(`FEATURED` 의 hero · middle · closing · ending · decor)은 반드시 `EXCLUDE` 에도 넣어 갤러리에 다시 나오지 않게 한다. 거의 같은 컷(지각 해시 차이 ≤ 27)은 한 장만 남긴다. 현재 갤러리 53장. 새 대표 사진을 고르면 `EXCLUDE` 도 같이 갱신.
 - 사진 비율: 세로 54장, 가로 10장. 갤러리는 2열 메이슨리 그리드(CSS columns 또는 높이 계산)로, 각 사진은 원본 비율 유지. 라이트박스에서는 `object-fit: contain`.
 - `액자 크기 크롭본/`은 액자 인쇄용 복제본이므로 웹에서는 사용하지 않는다.
 - 약도: PDF 4페이지에서 300dpi로 추출한 `public/images/map.png` (756 × 456) 사용. assets의 카카오톡 캡처 PNG는 저해상도라 쓰지 않는다.

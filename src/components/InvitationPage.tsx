@@ -33,7 +33,7 @@ export default function InvitationPage({ wedding }: { wedding: Wedding }) {
       {features.guestbook && <Guestbook />}
       <Account wedding={wedding} />
       {features.rsvp && <Rsvp wedding={wedding} />}
-      {features.photos && <Capture wedding={wedding} decor={FEATURED.closing.map(photo)} />}
+      {features.photos && <Capture wedding={wedding} decor={FEATURED.decor.map(photo)} />}
       <Closing photos={FEATURED.closing.map(photo)} />
       <SaveTheDate wedding={wedding} />
       <Ending wedding={wedding} photo={photo(FEATURED.ending)} position={FEATURED.endingPosition} />
