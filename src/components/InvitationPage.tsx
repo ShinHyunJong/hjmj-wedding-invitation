@@ -7,6 +7,7 @@ import Gallery from "@/components/sections/Gallery";
 import Guestbook from "@/components/sections/Guestbook";
 import Account from "@/components/sections/Account";
 import Rsvp from "@/components/sections/Rsvp";
+import RsvpPopup from "@/components/sections/RsvpPopup";
 import Capture from "@/components/sections/Capture";
 import SaveTheDate from "@/components/sections/SaveTheDate";
 import Closing from "@/components/sections/Closing";
@@ -38,6 +39,7 @@ export default function InvitationPage({ wedding }: { wedding: Wedding }) {
       <SaveTheDate wedding={wedding} />
       <Ending wedding={wedding} photo={photo(FEATURED.ending)} position={FEATURED.endingPosition} />
       <Footer wedding={wedding} />
+      {features.rsvp && <RsvpPopup wedding={wedding} />}
     </main>
   );
 }
