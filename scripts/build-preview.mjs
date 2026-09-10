@@ -17,6 +17,7 @@ import path from "node:path";
 const ROOT = path.resolve(import.meta.dirname, "..");
 const CONFIG = path.join(ROOT, "src/config/wedding.ts");
 const OUT = path.join(ROOT, "out");
+const PRERENDER = path.join(ROOT, ".next", "server", "app");
 const DEST_DIR = path.join(ROOT, "screenshots");
 const DEST = path.join(DEST_DIR, "preview.html");
 
@@ -31,7 +32,13 @@ if (!current) throw new Error("heroVariant 를 config 에서 찾지 못함");
 function buildWith(variant) {
   writeFileSync(CONFIG, original.replace(/heroVariant: "\w+" as HeroVariant/, `heroVariant: "${variant}" as HeroVariant`));
   execSync("pnpm build", { cwd: ROOT, stdio: "pipe" });
-  return readFileSync(path.join(OUT, "index.html"), "utf8");
+  // 정적 export(out/) 가 아니면 prerender 결과(.next/server/app/index.html) 를 쓴다
+  const exported = path.join(OUT, "index.html");
+  return readFileSync(existsSync(exported) ? exported : path.join(PRERENDER, "index.html"), "utf8");
+}
+function cssFile(href) {
+  const a = path.join(OUT, href);
+  return existsSync(a) ? a : path.join(ROOT, ".next", href.replace(/^\/_next\//, ""));
 }
 
 const mime = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp", svg: "image/svg+xml" };
@@ -50,7 +57,7 @@ try {
   for (const v of variants) {
     const html = buildWith(v);
     if (!css) {
-      for (const [, href] of html.matchAll(/<link[^>]+href="([^"]+\.css)"[^>]*>/g)) css += readFileSync(path.join(OUT, href), "utf8") + "\n";
+      for (const [, href] of html.matchAll(/<link[^>]+href="([^"]+\.css)"[^>]*>/g)) css += readFileSync(cssFile(href), "utf8") + "\n";
     }
     const main = html.match(/<main[\s\S]*?<\/main>/)?.[0];
     if (!main) throw new Error("main not found");

@@ -65,8 +65,7 @@
 - 카카오톡 공유용 썸네일 · 제목 · 설명 문구
 - Profile 섹션용 신랑 · 신부 소개 문구(각 4줄 내외)와 개인 사진 1장씩
 - 인터뷰 / SINCE(연애 스토리, 사귄 시작일) / Notice 섹션 포함 여부
-- 참석 의사(RSVP) · 방명록 · 하객 사진 업로드 수집 여부와 저장 방식 (서버 저장소 필요)
-- 배포 도메인
+- 배포 도메인 (정해지면: 카카오 Web 플랫폼, NCP Web 서비스 URL, S3 CORS AllowedOrigins, NEXT_PUBLIC_SITE_URL 네 곳에 등록)
 
 ---
 
@@ -133,17 +132,17 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 8. **Location** — eyebrow `LOCATION`, "오시는 길", 홀 이름(굵게) · 주소 · `Tel.` 링크, 네이버 지도(전폭), `약도 이미지 보기` 버튼(`public/images/map.png` 모달), **내비게이션** 소제목 + 버튼 3종(네이버지도 / 티맵 / 카카오내비), **지하철** · **주차** 안내(참고 사이트는 버스도 있으나 우리는 주차로 대체).
 9. **Notice** — eyebrow `NOTICE` + 안내 제목 + 본문 + 사진. 참고 사이트는 포토부스 안내. **우리 예식에 안내할 내용이 있는지 확인 필요.** 없으면 생략.
 10. **Gallery** — eyebrow `GALLERY`, "웨딩 갤러리". **2열 메이슨리 그리드**(세로 사진 기준, 가로 사진은 원본 비율 유지), 초기 N장만 보여주고 `더보기` 버튼으로 확장. 탭 시 전체화면 라이트박스(스와이프).
-11. **Guestbook** — eyebrow `GUESTBOOK`, "방명록". 카드형 가로 스크롤 + `작성하기` / `전체보기`. 저장소가 필요하므로 **선택 섹션**(RSVP와 같이 결정).
+11. **Guestbook** — eyebrow `GUESTBOOK`, "방명록". 카드형 가로 스크롤(최근 10) + `작성하기`(이름 · 메시지 · 비밀번호 4~20자) / `전체보기`(더 보기 페이징) / 카드 × 로 본인 삭제(비밀번호). **구현됨** (`sections/Guestbook.tsx`).
 12. **Account** — eyebrow `ACCOUNT`, "마음 전하실 곳", 안내 3줄. `신랑측 계좌번호` / `신부측 계좌번호` **아코디언**(펼치면 예금주 + 복사 아이콘, 은행 · 계좌번호, 오른쪽에 카카오페이 노란 원형 버튼).
-13. **R.S.V.P.** — "참석 의사 전달", 설명 2줄, `참석의사 전달하기` 버튼. 참고 사이트는 첫 진입 시 하단 시트 팝업(일시 · 장소 · 주소 + `오늘 하루 보지 않기`)도 띄움. 저장소 필요, **선택 섹션**.
-14. **Capture our moments** — 예식 당일 하객 사진 업로드. 저장소 필요, **선택 섹션**. 기본 제외.
+13. **R.S.V.P.** — "참석 의사 전달", 설명 2줄, `참석의사 전달하기` 버튼 → 하단 시트 폼(신랑/신부측 세그먼트, 성함, 인원 스테퍼 1~10). 항목은 사용자 확정(이름 · 참석 인원 · 신랑/신부측). **구현됨**. 첫 진입 팝업은 미구현(선택).
+14. **Capture our moments** — "축하 사진 공유". 폴라로이드 3장 장식, 설명, `사진 업로드`(예식일 00:00 KST 전에는 비활성 + 안내), 업로드 후 3열 그리드로 최근 12장. **구현됨** (`sections/Capture.tsx`).
 15. **Closing** — 사진 3장을 세로로, 각 사진 왼쪽 아래에 스크립트 "Love story is beautiful, but ours is my favorite" 겹침.
 16. **Save the Date** — 스크립트 "Save the Date"(버건디) + 한글 표 3행 `날짜 | 2026년 11월 22일 일요일`, `시간 | 오후 4시`, `장소 | 홀 이름 · 주소` (2026-09-10 사용자 요청으로 표 내용 전부 한글. 요일 · 오전/오후는 date 값에서 계산).
 17. **Ending** — 전폭 사진(2:3, `FEATURED.ending` + `endingPosition`) 위에 시. 상단은 흰색으로 페이드, 하단은 어둡게 페이드. 글은 세리프 한글 · 자간 0.14em · 줄간격 2.2 · 흰색, 아래에 출처. 문구는 `wedding.ending` (지금은 이수동 「사랑가」, **두 사람 문구로 교체 여부 확인**).
 18. **Footer** — 실링왁스 모노그램, `카카오톡으로 초대장 보내기`(키 있을 때), 링크 복사, 영문 이름 · 날짜.
 
-기본 구현 범위: 1, 2, 4, 7, 8, 10, 12, 15, 16, 17, 18. (구현됨 — `src/components/sections/`)
-사용자 확인 후 추가: 3(소개 문구), 5, 9, 11, 13, 14. 6(Interview)은 제외.
+구현됨: 1, 2, 4, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18. 순서: Gallery → Guestbook → Account → RSVP → Capture → Closing → Save the Date → Ending → Footer.
+사용자 확인 후 추가: 3(소개 문구), 5, 9. 6(Interview)은 제외.
 (참고 사이트 번호와 어긋남 주의: 우리 순서는 Closing → Save the Date → Ending → Footer.)
 
 ---
@@ -187,7 +186,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 
 ## 7. 기술 스택 (세팅 완료)
 
-- **Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS v4**, `output: "export"` 정적 빌드 → `out/`. **Vercel** 배포 예정.
+- **Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS v4**. 2026-09-10 부터 **서버 API 포함**(정적 export 아님) → **Vercel** 배포. 페이지는 prerender(SSG), `/api/*` 는 서버리스 함수.
 - 패키지 매니저 **pnpm**. Node 24.
 - 상태 관리 없음. 데이터는 `src/config/wedding.ts` 단일 파일.
 - 폰트: `next/font/google`로 Pinyon Script / Cormorant Garamond / Noto Serif KR, SUIT Variable은 `globals.css`에서 jsDelivr CDN `@import`.
@@ -210,8 +209,8 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 
 ```
 pnpm dev          # 개발 서버 (package.json 에 --port 5400 고정. 카카오 Web 도메인도 localhost:5400 으로 등록)
-                  # Next 는 프로젝트당 dev 서버 1개만 허용. 사용자 서버가 떠 있으면 정적 확인은 `pnpm build && python3 -m http.server 5401 -d out` 로.
-pnpm build        # 정적 빌드 → out/
+                  # Next 는 프로젝트당 dev 서버 1개만 허용. 사용자 서버가 떠 있으면 `pnpm build && pnpm exec next start -p 5401` 로 확인.
+pnpm build        # 프로덕션 빌드 (.next). 로컬 확인은 pnpm exec next start -p 5401
 pnpm typecheck    # tsc --noEmit
 pnpm lint         # eslint
 pnpm photos       # 갤러리 사진 최적화 (--force 로 재생성)
@@ -219,28 +218,47 @@ pnpm shot         # 헤드리스 스크린샷 → screenshots/viewport.png (--fu
 pnpm preview      # 공유용 단일 HTML → screenshots/preview.html (Artifact 로 게시. hero 변형 토글 포함, --variants photo 로 제한 가능)
 ```
 
-"링크로 보여줘" 요청 시: `pnpm preview` → `screenshots/preview.html` 을 Artifact 도구로 게시 (기존 URL 갱신).
+"링크로 보여줘" 요청 시: `pnpm preview` → `screenshots/preview.html` 을 Artifact 도구로 게시 (기존 URL 갱신). 정적 export 가 없어진 뒤로는 `.next/server/app/index.html` 에서 읽는다.
 미리보기에는 Next 런타임이 없어 카운트다운만 동작하고 더보기 · 라이트박스 · 복사 · 모달은 동작하지 않는다.
+
+### 백엔드 (참석 의사 · 방명록 · 하객 사진) — 2026-09-10
+
+- **DB**: RDS MySQL 8.4 (서울), 데이터베이스 `wedding`. `pnpm db:migrate` 로 테이블 생성(멱등). 테이블 `rsvp`, `guestbook`(soft delete: `deleted_at`), `photos`(S3 키 + `pending/uploaded`).
+- **S3**: 버킷 `rechee-platform-asset`, 접두어 `wedding/` (사진은 `wedding/photos/YYYYMMDD/<uuid>.<ext>`). 버킷은 비공개, 열람은 1시간 서명 URL, 업로드는 5분 서명 PUT URL 로 브라우저가 직접 올린다. **버킷 CORS 에 배포 도메인 등록 필요** (PUT/GET, 현재 localhost:5400 만).
+- **API** (`src/app/api/`, `runtime = "nodejs"`):
+  - `POST /api/rsvp` {side, name, headcount} — 이름 · 인원 · 신랑/신부측 (사용자 확정 항목)
+  - `GET /api/guestbook?limit&cursor`, `POST /api/guestbook` {name, message, password}, `DELETE /api/guestbook/:id` {password} (또는 관리자 토큰)
+  - `GET /api/photos`(서명 URL 목록 + open 여부), `POST /api/photos` {contentType, size} → {id, uploadUrl}, `PUT /api/photos/:id` (S3 HeadObject 로 완료 확인)
+  - `GET /api/admin/export?type=rsvp|guestbook|photos&token=` → CSV (BOM 포함, 엑셀용). `ADMIN_TOKEN` 없으면 항상 401.
+- **보호**: 허니팟 필드 `website`(값 있으면 조용히 ok), IP 별 DB 카운트 제한(rsvp · guestbook 10분 5건, photos 10분 60건), 길이 · 크기(25MB) · 형식(JPG/PNG/WebP/HEIC) 제한, 방명록 비밀번호 scrypt 해시.
+- **업로드 개방**: 예식일 00:00 KST 부터. `PHOTO_UPLOAD_OPEN=1` 이면 항상 열림(테스트).
+- **환경변수**: `.env.example` 참고. Vercel 에도 같은 이름으로 넣는다. `.env` 의 값은 채팅에 절대 출력하지 않는다(`sed -E 's/=(.{3}).*/=\1…/' .env` 로 마스킹).
+- **로컬 확인**: dev 서버는 프로젝트당 1개라, 사용자 서버가 떠 있으면 `pnpm build && PHOTO_UPLOAD_OPEN=1 pnpm exec next start -p 5401` 로 띄워 curl · 헤드리스로 검사. 테스트로 넣은 행과 S3 객체는 반드시 지운다.
+- **섹션 on/off**: `wedding.features` {rsvp, guestbook, photos}.
+- 2026-09-10 end-to-end 검증 완료: rsvp 등록/검증/허니팟, 방명록 작성/목록/오답 거부/삭제, 사진 presign → S3 PUT → 확인 → 서명 URL 열람, CSV export, 토큰 없는 export 401.
 
 ### 디렉터리
 
 ```
 src/
   app/            layout.tsx(폰트·메타), page.tsx(/ = t), [variant]/page.tsx(/g, /t), globals.css(컬러·폰트 토큰)
+    api/          rsvp, guestbook(+[id]), photos(+[id]), admin/export — 서버 라우트
   components/
     InvitationPage.tsx   섹션 순서 (모든 경로가 공유)
     hero/         HeroSealed, HeroPolaroid, WaxSeal, types.ts, index.tsx(variant 선택)
-    sections/     (예정) Invitation, DateBlock, Calendar, Location, Gallery, Account, SaveTheDate, Footer
-    ui/           SectionTitle (예정: Button, Modal, CopyButton)
+    sections/     Invitation, Calendar(+Countdown), JoinUs, Location(+NaverMap), Gallery, Guestbook, Account, Rsvp, Capture, Closing, SaveTheDate, Ending, Footer
+    ui/           SectionTitle, Button, Modal, Reveal, Form(Input/Textarea/Segmented/Honeypot/SubmitButton)
   config/
     wedding.ts    결혼 정보 · 연락처 · 계좌 · heroVariant · monogram
     gallery.ts    갤러리 순서(ORDER/EXCLUDE), mainPhoto, FEATURED
     gallery.generated.json   pnpm photos 산출물
-  lib/            (예정) date(D-day), share(Kakao), clipboard
+  lib/            date(D-day), kakao(공유·내비), naver(지도), api(fetch 도우미)
+    server/       db(mysql2 풀), s3(서명 URL), http(응답·검증·제한·해시) — 서버 전용(server-only)
 public/
   gallery/        최적화된 사진 (자동 생성)
   images/         main.jpg(메인 사진), map.png(약도), (예정) og.jpg
 scripts/
+  db-migrate.ts        pnpm db:migrate
   optimize-photos.ts   pnpm photos
   screenshot.ts        pnpm shot (헤드리스 Chromium)
   build-preview.mjs    pnpm preview (Artifact 공유용 단일 HTML)

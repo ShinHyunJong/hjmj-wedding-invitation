@@ -36,6 +36,9 @@ export const wedding = {
   /** 실링왁스 모노그램 (스크립트 폰트로 렌더링) */
   monogram: "SK",
 
+  /** 서버(API)가 필요한 섹션 켜고 끄기. RDS MySQL + S3 (src/app/api). */
+  features: { rsvp: true, guestbook: true, photos: true },
+
   groom: {
     name: "신현종",
     nameEn: "SHIN HYUN JONG",

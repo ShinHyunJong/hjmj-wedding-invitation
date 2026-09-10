@@ -50,3 +50,6 @@ next-env.d.ts
 # playwright
 /.playwright-mcp/
 /screenshots/
+
+# 환경변수 견본은 커밋
+!.env.example
