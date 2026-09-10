@@ -201,7 +201,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 - **카카오 키**: `.env`의 `KAKAO_JS_KEY` (JavaScript 키, gitignore 됨). `next.config.ts`가 `NEXT_PUBLIC_KAKAO_JS_KEY`로 노출한다. **키나 값을 채팅 · 문서 · 로그에 절대 출력하지 않는다** (`.env` 를 볼 때는 `sed -E 's/=(.{3}).*/=\1…/'` 로 마스킹).
   - 카카오 개발자 콘솔 → 앱 → 플랫폼 → Web 에 **`http://localhost:5400`** 과 배포 도메인을 등록해야 공유가 동작한다. 미등록이면 401 `domain mismatched`(2026-09-08 확인).
   - `.env`/`next.config.ts` 변경 후에는 dev 서버를 재시작해야 반영된다.
-- 내비게이션 링크 (`sections/Location.tsx`): 좌표 있으면 네이버 `nmap://route/public?dlat&dlng&dname`, 티맵 `tmap://?rGoName&rGoY(위도)&rGoX(경도)`, 카카오 `map.kakao.com/link/to/이름,위도,경도`. 좌표 없으면 장소명 검색 링크. 앱 스킴은 미설치 시 웹 링크로 폴백.
+- 내비게이션 링크 (`sections/Location.tsx`): 좌표 있으면 네이버 `nmap://route/public?dlat&dlng&dname`, 티맵 `tmap://?rGoName&rGoY(위도)&rGoX(경도)`, 카카오내비는 **Kakao JS SDK `Navi.start`** (앱 실행, 미설치 시 설치 안내. 2026-09-10 헤드리스로 `kakaonavi://` 스킴 호출 확인) — SDK 를 못 쓰면 `map.kakao.com/link/to/이름,위도,경도`. 좌표 없으면 장소명 검색 링크. 앱 스킴은 미설치 시 웹 링크로 폴백.
 - 애니메이션: `ui/Reveal.tsx` — 스크롤 진입 시 24px 상승 + blur 6px→0 + opacity, 1.1s 감속 곡선, `delay`로 순차 등장. 정적 HTML에서는 항상 보임(썸네일 안전). reduced-motion 존중.
 - 버튼(`ui/Button.tsx`): **참고 사이트와 동일하게** 흰 바탕 · 1px `--color-line` 테두리 · 모서리 14px · 높이 46px · 포인트 색 글자 + 같은 색 얇은 선 아이콘. 내비 버튼은 모서리 10px에 브랜드 색 아이콘.
 - `next/image`는 `unoptimized`. 사진은 미리 최적화된 WebP를 `<img>`로 쓴다.

@@ -8,10 +8,16 @@ interface KakaoShareNamespace {
   }): void;
 }
 
+interface KakaoNaviNamespace {
+  /** 카카오내비 앱으로 길안내 시작. 앱이 없으면 설치 페이지로 이동. */
+  start(options: { name: string; x: number; y: number; coordType: "wgs84" | "katec"; vehicleType?: number; rpOption?: number }): void;
+}
+
 interface KakaoSdk {
   init(key: string): void;
   isInitialized(): boolean;
   Share: KakaoShareNamespace;
+  Navi: KakaoNaviNamespace;
 }
 
 interface Window {

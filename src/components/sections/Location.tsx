@@ -7,6 +7,7 @@ import Modal from "@/components/ui/Modal";
 import Reveal from "@/components/ui/Reveal";
 import NaverMap from "./NaverMap";
 import type { Coords } from "@/lib/naver";
+import { loadKakaoSdk } from "@/lib/kakao";
 import type { Wedding } from "@/config/wedding";
 
 /**
@@ -33,6 +34,15 @@ export default function Location({ wedding }: { wedding: Wedding }) {
         tmap: `tmap://search?name=${name}`,
         kakao: `https://map.kakao.com/link/search/${name}`,
       };
+
+  /** 카카오내비: JS SDK 로 앱 실행 (좌표 필요). SDK 를 못 쓰면 카카오맵 웹 길찾기로. */
+  async function openKakaoNavi(e: React.MouseEvent<HTMLAnchorElement>) {
+    if (!coords) return; // 좌표 없으면 링크(검색) 그대로
+    e.preventDefault();
+    const sdk = await loadKakaoSdk();
+    if (sdk?.Navi) sdk.Navi.start({ name: venue.name, x: coords.lng, y: coords.lat, coordType: "wgs84" });
+    else window.open(nav.kakao, "_blank", "noopener");
+  }
 
   async function copyAddress() {
     try {
@@ -96,7 +106,7 @@ export default function Location({ wedding }: { wedding: Wedding }) {
             <div className="mt-4 grid grid-cols-3 gap-2">
               <NavLink href={nav.naver} fallbackHref={nav.naverWeb} label="네이버지도" icon={<NaverIcon />} />
               <NavLink href={nav.tmap} label="티맵" icon={<TmapIcon />} />
-              <NavLink href={nav.kakao} label="카카오내비" icon={<KakaoNaviIcon />} />
+              <NavLink href={nav.kakao} onClick={openKakaoNavi} label="카카오내비" icon={<KakaoNaviIcon />} />
             </div>
           </div>
         </Reveal>
@@ -140,9 +150,22 @@ function Row({ term, children }: { term: string; children: React.ReactNode }) {
  * 앱 스킴(nmap://, tmap://) 링크는 앱이 없으면 아무 일도 안 일어나므로,
  * 잠시 후에도 페이지가 그대로면 웹 링크(fallbackHref)로 보낸다.
  */
-function NavLink({ href, fallbackHref, label, icon }: { href: string; fallbackHref?: string; label: string; icon: React.ReactNode }) {
+function NavLink({
+  href,
+  fallbackHref,
+  label,
+  icon,
+  onClick: customClick,
+}: {
+  href: string;
+  fallbackHref?: string;
+  label: string;
+  icon: React.ReactNode;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+}) {
   const isScheme = !href.startsWith("http");
   function onClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    if (customClick) return customClick(e);
     if (!isScheme || !fallbackHref) return;
     e.preventDefault();
     const start = Date.now();
