@@ -1,41 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import RsvpForm from "./RsvpForm";
 import type { Wedding } from "@/config/wedding";
 
-const KEY = "rsvp-popup-hide-until";
-
 /**
- * 첫 진입 시 하단에서 올라오는 참석 의사 안내 시트 (참고 사이트 mZdJd64x2r).
- * "오늘 하루 보지 않기" 를 누르면 다음 날 0시(KST)까지 다시 뜨지 않는다 (localStorage).
+ * 진입 시 바로 뜨는 참석 의사 안내 시트 (참고 사이트 mZdJd64x2r).
+ * 페이지 첫 렌더링부터 열린 상태로 그려지며(지연 없음), × 로 닫거나 폼을 제출하면 사라진다. 매 방문마다 다시 뜬다.
  */
 export default function RsvpPopup({ wedding }: { wedding: Wedding }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [form, setForm] = useState(false);
   const { date, venue } = wedding;
-
-  useEffect(() => {
-    let hidden = false;
-    try {
-      const until = Number(localStorage.getItem(KEY) ?? 0);
-      hidden = until > Date.now();
-    } catch {}
-    if (hidden) return;
-    const t = setTimeout(() => setOpen(true), 1400);
-    return () => clearTimeout(t);
-  }, []);
-
-  function hideToday() {
-    try {
-      const kstNow = Date.now() + 9 * 3600 * 1000;
-      const nextMidnightKst = Math.floor(kstNow / 86400000 + 1) * 86400000 - 9 * 3600 * 1000;
-      localStorage.setItem(KEY, String(nextMidnightKst));
-    } catch {}
-    setOpen(false);
-  }
 
   const weekday = ["일", "월", "화", "수", "목", "금", "토"][new Date(Date.UTC(date.year, date.month - 1, date.day)).getUTCDay()];
   const hour12 = date.hour % 12 === 0 ? 12 : date.hour % 12;
@@ -63,10 +41,7 @@ export default function RsvpPopup({ wedding }: { wedding: Wedding }) {
             <Row icon={<PinIcon />}>{venue.address}</Row>
           </dl>
 
-          <div className="mt-6 grid grid-cols-[1fr_1.4fr] items-center gap-3">
-            <button type="button" onClick={hideToday} className="py-3 text-[14px] text-text-sub underline-offset-4 hover:underline">
-              오늘 하루 보지 않기
-            </button>
+          <div className="mt-6">
             <Button onClick={() => setForm(true)} className="w-full">
               참석의사 전달하기
             </Button>
