@@ -236,6 +236,7 @@ pnpm preview      # 공유용 단일 HTML → screenshots/preview.html (Artifact
 - **환경변수**: `.env.example` 참고. Vercel 에도 같은 이름으로 넣는다. `.env` 의 값은 채팅에 절대 출력하지 않는다(`sed -E 's/=(.{3}).*/=\1…/' .env` 로 마스킹).
 - **로컬 확인**: dev 서버는 프로젝트당 1개라, 사용자 서버가 떠 있으면 `pnpm build && PHOTO_UPLOAD_OPEN=1 pnpm exec next start -p 5401` 로 띄워 curl · 헤드리스로 검사. 테스트로 넣은 행과 S3 객체는 반드시 지운다.
 - **섹션 on/off**: `wedding.features` {rsvp, guestbook, photos}.
+- **진단**: 모든 라우트는 `withErrors()` 로 감싸 예외 시 `{ok:false, error, detail}` JSON 500 (detail 에 에러 코드/메시지, 비밀번호 마스킹). `GET /api/health` 가 환경변수 설정 여부(값 아님)와 DB 연결 · 지연을 돌려준다 — 배포 후 500 이 나면 먼저 이걸 연다. 2026-09-11: 로컬 dev(5400) 와 next start 모두 rsvp 200 확인, 500 은 배포 환경(Vercel env 미설정 · RDS 보안그룹) 쪽으로 추정.
 - 2026-09-10 end-to-end 검증 완료: rsvp 등록/검증/허니팟, 방명록 작성/목록/오답 거부/삭제, 사진 presign → S3 PUT → 확인 → 서명 URL 열람, CSV export, 토큰 없는 export 401.
 
 ### 디렉터리

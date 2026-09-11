@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { exec } from "@/lib/server/db";
-import { ok, bad, readJson, clientIp, clean, tooMany, isBot } from "@/lib/server/http";
+import { ok, bad, readJson, clientIp, clean, tooMany, isBot, withErrors } from "@/lib/server/http";
 
 export const runtime = "nodejs";
 
@@ -14,7 +14,7 @@ interface Body {
 }
 
 /** 참석 의사 등록 */
-export async function POST(req: NextRequest) {
+export const POST = withErrors(async (req: NextRequest) => {
   const body = await readJson<Body>(req);
   if (isBot(body)) return ok();
 
@@ -39,4 +39,4 @@ export async function POST(req: NextRequest) {
     ip,
   ]);
   return ok({ ok: true });
-}
+});

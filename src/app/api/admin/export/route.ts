@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import type { RowDataPacket } from "mysql2";
 import { query } from "@/lib/server/db";
-import { bad, isAdmin } from "@/lib/server/http";
+import { bad, isAdmin, withErrors } from "@/lib/server/http";
 
 export const runtime = "nodejs";
 
@@ -12,7 +12,7 @@ export const runtime = "nodejs";
  *   /api/admin/export?type=photos&token=...     사진 목록 (S3 키)
  * 엑셀에서 한글이 깨지지 않도록 UTF-8 BOM 을 붙인다.
  */
-export async function GET(req: NextRequest) {
+export const GET = withErrors(async (req: NextRequest) => {
   if (!isAdmin(req)) return bad("권한이 없습니다.", 401);
   const type = req.nextUrl.searchParams.get("type") ?? "rsvp";
 
@@ -32,4 +32,4 @@ export async function GET(req: NextRequest) {
   return new Response(csv, {
     headers: { "content-type": "text/csv; charset=utf-8", "content-disposition": `attachment; filename="${type}.csv"` },
   });
-}
+});

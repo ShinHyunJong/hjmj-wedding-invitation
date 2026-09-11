@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import type { RowDataPacket } from "mysql2";
 import { exec, query } from "@/lib/server/db";
-import { ok, bad, readJson, clientIp, clean, tooMany, isBot, hashPassword } from "@/lib/server/http";
+import { ok, bad, readJson, clientIp, clean, tooMany, isBot, hashPassword, withErrors } from "@/lib/server/http";
 
 export const runtime = "nodejs";
 
@@ -13,7 +13,7 @@ export interface GuestbookEntry {
 }
 
 /** 목록 (최신순, 커서 = 마지막 id). ?limit=20&cursor=123 */
-export async function GET(req: NextRequest) {
+export const GET = withErrors(async (req: NextRequest) => {
   const limit = Math.min(50, Math.max(1, Number(req.nextUrl.searchParams.get("limit")) || 20));
   const cursor = Number(req.nextUrl.searchParams.get("cursor")) || 0;
   const rows = await query<(RowDataPacket & { id: number; name: string; message: string; created_at: Date })[]>(
@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
     createdAt: new Date(r.created_at).toISOString(),
   }));
   return ok({ items, nextCursor: hasMore ? items[items.length - 1].id : null });
-}
+});
 
 interface Body {
   name: string;
@@ -40,7 +40,7 @@ interface Body {
 }
 
 /** 작성 */
-export async function POST(req: NextRequest) {
+export const POST = withErrors(async (req: NextRequest) => {
   const body = await readJson<Body>(req);
   if (isBot(body)) return ok();
 
@@ -57,4 +57,4 @@ export async function POST(req: NextRequest) {
 
   const res = await exec("INSERT INTO guestbook (name, message, password_hash, ip) VALUES (?, ?, ?, ?)", [name, message, hashPassword(password), ip]);
   return ok({ ok: true, id: res.insertId });
-}
+});
