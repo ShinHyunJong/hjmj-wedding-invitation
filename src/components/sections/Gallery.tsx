@@ -86,7 +86,7 @@ export default function Gallery({ photos }: { photos: GalleryPhoto[] }) {
                 role="option"
                 aria-selected={active}
                 onClick={() => goTo(i)}
-                className={`relative aspect-square overflow-hidden rounded-[4px] transition-opacity ${active ? "opacity-100" : "opacity-60 hover:opacity-90"}`}
+                className="relative aspect-square overflow-hidden rounded-[4px] focus-visible:outline-2 focus-visible:outline-primary"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={p.thumb} alt="" loading="lazy" className="h-full w-full object-cover" />
