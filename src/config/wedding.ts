@@ -37,7 +37,7 @@ export const wedding = {
   monogram: "SK",
 
   /** 서버(API)가 필요한 섹션 켜고 끄기. RDS MySQL + S3 (src/app/api). */
-  features: { rsvp: true, guestbook: true, photos: true },
+  features: { rsvp: true, guestbook: false, photos: true }, // 방명록은 일단 숨김 (2026-09-11). 다시 켜려면 true.
 
   groom: {
     name: "신현종",
