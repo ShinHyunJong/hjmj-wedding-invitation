@@ -22,6 +22,7 @@ export default function HeroPhoto({ wedding, photo }: HeroProps) {
         height={photo.height}
         alt={`${groom.name}, ${bride.name} 웨딩 사진`}
         className="mt-8 aspect-[4/5] w-full object-cover"
+        style={{ objectPosition: photo.focal ?? "50% 35%" }}
         fetchPriority="high"
       />
 

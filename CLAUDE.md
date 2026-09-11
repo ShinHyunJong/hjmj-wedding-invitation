@@ -175,6 +175,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
   - 썸네일용: `<id>.thumb.webp` 긴 변 480px, q75
   - manifest: `src/config/gallery.generated.json` (직접 수정 금지, 스크립트가 덮어씀)
   - id는 파일명 첫 토큰 (`YS_01595 첫장---.jpg` → `YS_01595`). 이미 있는 결과물은 건너뛰며 `--force`로 재생성.
+- **얼굴 초점(2026-09-11)**: `pnpm focal` (`scripts/focal-points.ts` + `scripts/faces/faces.swift`, macOS Vision 프레임워크, swiftc 필요) 이 64장의 얼굴 박스를 찾아 `src/config/focal.generated.json` 에 `{x, y, faces}`(%) 로 저장한다. `gallery.ts` 가 각 사진에 `focal`(CSS object-position) 로 붙이고, 갤러리 썸네일 · 대표 사진 · hero · Join Us · Closing · Capture 장식이 모두 이 값을 쓴다 → 정사각/4:5 크롭에서도 얼굴이 들어온다. 얼굴 없는 사진(MS_01965, YS_01595, YS_03534)은 세로 50%/35%, 가로 50%/50%. 사진을 다시 최적화하면 `pnpm focal` 도 다시 돌린다.
 - 원본 폴더 `weddingPhoto/`와 `assets/`는 **git에 커밋하지 않는다** (`.gitignore` 등록됨). 최적화 결과물만 커밋.
 - 갤러리 순서는 `src/config/gallery.ts`의 `ORDER` 배열로, 제외는 `EXCLUDE`로 관리. 파일명의 `순서1~4`, `첫장` 표기는 사진관의 앨범 배치 힌트일 뿐이므로 초기값으로만 반영했다.
 - **중복 방지 규칙(2026-09-10)**: 섹션 대표 사진(`FEATURED` 의 hero · middle · closing · ending · decor)은 반드시 `EXCLUDE` 에도 넣어 갤러리에 다시 나오지 않게 한다. 거의 같은 컷(지각 해시 차이 ≤ 27)은 한 장만 남긴다. 갤러리는 `GALLERY_COUNT`(28)장만 노출. 새 대표 사진을 고르면 `EXCLUDE` 도 같이 갱신.
@@ -215,6 +216,7 @@ pnpm build        # 프로덕션 빌드 (.next). 로컬 확인은 pnpm exec next
 pnpm typecheck    # tsc --noEmit
 pnpm lint         # eslint
 pnpm photos       # 갤러리 사진 최적화 (--force 로 재생성)
+pnpm focal        # 얼굴 위치 → focal.generated.json (macOS 전용)
 pnpm shot         # 헤드리스 스크린샷 → screenshots/viewport.png (--full, --url, --width/--height, --out)
 pnpm preview      # 공유용 단일 HTML → screenshots/preview.html (Artifact 로 게시. hero 변형 토글 포함, --variants photo 로 제한 가능)
 ```
@@ -261,6 +263,7 @@ public/
   images/         main.jpg(메인 사진), map.png(약도), (예정) og.jpg
 scripts/
   db-migrate.ts        pnpm db:migrate
+  focal-points.ts      pnpm focal (faces/faces.swift 컴파일 · 실행)
   optimize-photos.ts   pnpm photos
   screenshot.ts        pnpm shot (헤드리스 Chromium)
   build-preview.mjs    pnpm preview (Artifact 공유용 단일 HTML)

@@ -54,6 +54,7 @@ export default function Gallery({ photos }: { photos: GalleryPhoto[] }) {
                       alt=""
                       loading={i < 2 ? "eager" : "lazy"}
                       className={`aspect-[4/5] w-full ${p.orientation === "landscape" ? "object-contain" : "object-cover"}`}
+                      style={{ objectPosition: p.focal }}
                     />
                   </button>
                 </div>
@@ -82,7 +83,7 @@ export default function Gallery({ photos }: { photos: GalleryPhoto[] }) {
                 className="relative aspect-square overflow-hidden rounded-[4px] focus-visible:outline-2 focus-visible:outline-primary"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={p.thumb} alt="" loading="lazy" className="h-full w-full object-cover" />
+                <img src={p.thumb} alt="" loading="lazy" className="h-full w-full object-cover" style={{ objectPosition: p.focal }} />
                 {active && <span className="pointer-events-none absolute inset-0 rounded-[4px] ring-2 ring-primary ring-inset" aria-hidden />}
               </button>
             );

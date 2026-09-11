@@ -7,6 +7,7 @@
  */
 export const GALLERY_COUNT = 28;
 import manifest from "./gallery.generated.json";
+import focalJson from "./focal.generated.json";
 
 export interface GalleryPhoto {
   id: string;
@@ -15,6 +16,14 @@ export interface GalleryPhoto {
   width: number;
   height: number;
   orientation: "portrait" | "landscape";
+  /** CSS object-position. 얼굴 위치(`pnpm focal`, macOS Vision) — 크롭될 때 얼굴이 들어오도록. */
+  focal: string;
+}
+
+const focal = focalJson as Record<string, { x: number; y: number; faces: number }>;
+function withFocal(p: Omit<GalleryPhoto, "focal">): GalleryPhoto {
+  const f = focal[p.id];
+  return { ...p, focal: f ? `${f.x}% ${f.y}%` : p.orientation === "portrait" ? "50% 35%" : "50% 50%" };
 }
 
 /**
@@ -92,12 +101,12 @@ export const FEATURED = {
   endingPosition: "center",
 } as const;
 
-const byId = new Map(manifest.map((p) => [p.id, p as GalleryPhoto]));
+const byId = new Map(manifest.map((p) => [p.id, withFocal(p as Omit<GalleryPhoto, "focal">)]));
 
 /** 갤러리에 보여줄 사진 (GALLERY_COUNT 장) */
 export const gallery: GalleryPhoto[] = [
   ...ORDER.map((id) => byId.get(id)).filter((p): p is GalleryPhoto => Boolean(p)),
-  ...(manifest as GalleryPhoto[]).filter((p) => !ORDER.includes(p.id)),
+  ...manifest.filter((p) => !ORDER.includes(p.id)).map((p) => byId.get(p.id)!),
 ]
   .filter((p) => !EXCLUDE.includes(p.id))
   .slice(0, GALLERY_COUNT);

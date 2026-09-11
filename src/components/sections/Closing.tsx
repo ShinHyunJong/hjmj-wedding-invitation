@@ -17,6 +17,7 @@ export default function Closing({ photos }: { photos: GalleryPhoto[] }) {
                 alt=""
                 loading="lazy"
                 className={`ml-auto block w-[72%] object-cover ${p.orientation === "landscape" ? "aspect-[4/3]" : "aspect-[4/5]"}`}
+                style={{ objectPosition: p.focal }}
               />
               <figcaption
                 className={`absolute bottom-6 left-5 font-script text-[30px] leading-[1.1] text-primary ${i % 2 ? "rotate-[-6deg]" : "rotate-[-4deg]"}`}

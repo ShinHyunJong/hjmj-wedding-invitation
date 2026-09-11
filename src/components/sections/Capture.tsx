@@ -82,7 +82,7 @@ export default function Capture({ wedding, decor }: { wedding: Wedding; decor: G
               alt=""
               loading="lazy"
               className="absolute top-2 h-[130px] w-[100px] rounded-[4px] border-[5px] border-white object-cover shadow-[0_6px_16px_rgba(35,31,32,0.18)]"
-              style={{ left: `${20 + i * 40}px`, transform: `rotate(${(i - 1) * 9}deg)`, zIndex: i }}
+              style={{ left: `${20 + i * 40}px`, transform: `rotate(${(i - 1) * 9}deg)`, zIndex: i, objectPosition: p.focal }}
             />
           ))}
         </div>

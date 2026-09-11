@@ -32,6 +32,7 @@ export default function JoinUs({ wedding, photo }: { wedding: Wedding; photo: Ga
           alt=""
           loading="lazy"
           className="mx-auto mt-6 aspect-[4/5] w-[calc(100%-32px)] object-cover"
+          style={{ objectPosition: photo.focal }}
         />
       </Reveal>
     </section>
