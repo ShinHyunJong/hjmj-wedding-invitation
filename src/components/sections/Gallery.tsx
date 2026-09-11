@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -16,7 +16,6 @@ export default function Gallery({ photos }: { photos: GalleryPhoto[] }) {
   const [emblaRef, embla] = useEmblaCarousel({ loop: true, align: "start" });
   const [index, setIndex] = useState(0);
   const [lightbox, setLightbox] = useState(false);
-  const thumbsRef = useRef<HTMLDivElement>(null);
 
   const onSelect = useCallback(() => {
     if (embla) setIndex(embla.selectedScrollSnap());
@@ -31,12 +30,6 @@ export default function Gallery({ photos }: { photos: GalleryPhoto[] }) {
       embla.off("reInit", onSelect);
     };
   }, [embla, onSelect]);
-
-  // 스와이프로 넘긴 사진의 썸네일이 보이도록
-  useEffect(() => {
-    const el = thumbsRef.current?.children[index] as HTMLElement | undefined;
-    el?.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  }, [index]);
 
   const goTo = (i: number) => embla?.scrollTo(i);
 
@@ -76,7 +69,7 @@ export default function Gallery({ photos }: { photos: GalleryPhoto[] }) {
       </Reveal>
 
       <Reveal delay={120}>
-        <div ref={thumbsRef} className="mt-3 grid grid-cols-4 gap-1.5 px-4" role="listbox" aria-label="사진 목록">
+        <div className="mt-3 grid grid-cols-4 gap-1.5 px-4" role="listbox" aria-label="사진 목록">
           {photos.map((p, i) => {
             const active = i === index;
             return (
