@@ -5,7 +5,7 @@
  *   ORDER 가 부족하면 EXCLUDE 에 없는 나머지가 id 순으로 채운다.
  * - 특정 사진을 빼려면 EXCLUDE에 id를 넣는다.
  */
-export const GALLERY_COUNT = 20;
+export const GALLERY_COUNT = 28;
 import manifest from "./gallery.generated.json";
 
 export interface GalleryPhoto {
@@ -42,6 +42,15 @@ const ORDER: string[] = [
   "YS_05012", // 강아지와 신부 (가로)
   "YS_02743", // 강아지와 셋, 화이트
   "YS_03038", // 손등 키스
+  // 2026-09-11 추가 8장: 소파 위 민지 · 강아지, 안고 있는 컷, 둘이 잘 나온 컷
+  "YS_05047", // 소파 위 민지와 강아지
+  "YS_05113", // 소파, 셋 (가로)
+  "YS_05219", // 소파, 둘과 강아지 (가로)
+  "YS_05544", // 민지가 강아지 안고 현종과 클로즈업
+  "YS_05275", // 소파에서 강아지 사이에 두고 마주 봄
+  "YS_04945", // 팜파스 정원, 강아지와 셋
+  "YS_04715", // 실내, 부케 든 둘
+  "MS_02387", // 정원 키스 (가로)
 ];
 
 /**
