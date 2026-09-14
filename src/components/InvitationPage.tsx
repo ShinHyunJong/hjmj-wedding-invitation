@@ -27,7 +27,7 @@ export default function InvitationPage({ wedding }: { wedding: Wedding }) {
       <Hero variant={wedding.heroVariant} wedding={wedding} photo={photo(FEATURED.hero)} />
       <Invitation wedding={wedding} />
       <Calendar wedding={wedding} />
-      <JoinUs wedding={wedding} photo={photo(FEATURED.middle)} />
+      <JoinUs photo={photo(FEATURED.middle)} />
       <Location wedding={wedding} />
       <Gallery photos={gallery} />
       {features.guestbook && <Guestbook />}
