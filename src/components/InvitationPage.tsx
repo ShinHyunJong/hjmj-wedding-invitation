@@ -36,7 +36,7 @@ export default function InvitationPage({ wedding }: { wedding: Wedding }) {
       {features.photos && <Capture wedding={wedding} decor={FEATURED.decor.map(photo)} />}
       <Closing photos={FEATURED.closing.map(photo)} />
       <SaveTheDate wedding={wedding} />
-      <Ending wedding={wedding} photo={photo(FEATURED.ending)} position={FEATURED.endingPosition} />
+      <Ending wedding={wedding} photo={photo(FEATURED.ending)} position={FEATURED.endingPosition} tone={FEATURED.endingTone} />
       <Footer wedding={wedding} />
     </main>
   );

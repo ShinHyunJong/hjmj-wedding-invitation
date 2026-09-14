@@ -139,7 +139,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 14. **Capture our moments** — (2026-09-14 `features.photos = false` 로 **숨김**. 코드 · API · S3 연동은 그대로) "축하 사진 공유". 폴라로이드 3장 장식, 설명, `사진 업로드`(예식일 00:00 KST 전에는 비활성 + 안내), 업로드 후 3열 그리드로 최근 12장. **구현됨** (`sections/Capture.tsx`).
 15. **Closing** — 사진 3장을 세로로, 각 사진 왼쪽 아래에 스크립트 "Love story is beautiful, but ours is my favorite" 겹침.
 16. **Save the Date** — 스크립트 "Save the Date"(버건디) + 한글 표 3행 `날짜 | 2026년 11월 22일 일요일`, `시간 | 오후 4시`, `장소 | 홀 이름 · 주소` (2026-09-10 사용자 요청으로 표 내용 전부 한글. 요일 · 오전/오후는 date 값에서 계산).
-17. **Ending** — 전폭 사진(2:3, `FEATURED.ending` + `endingPosition`) 위에 시. 상단은 흰색으로 페이드, 하단은 어둡게 페이드. 글은 세리프 한글 · 자간 0.14em · 줄간격 2.2 · 흰색, 아래에 출처. 문구는 `wedding.ending` (지금은 이수동 「사랑가」, **두 사람 문구로 교체 여부 확인**).
+17. **Ending** — 전폭 사진(2:3, `FEATURED.ending` + `endingPosition` + `endingTone`) 위에 시. 상단은 흰색으로 페이드. `endingTone`: dark = 하단 어둡게 + 흰 글씨, light = 하단 흰색 스밈 + 차콜 글씨(밝은 사진용, 2026-09-14 추가). 현재 YS_00467(소파에서 둘이 웃는 컷, light). 글은 세리프 한글 · 자간 0.14em · 줄간격 2.2, 아래에 출처. 문구는 `wedding.ending` (지금은 이수동 「사랑가」, **두 사람 문구로 교체 여부 확인**).
 18. **Footer** — `카카오톡으로 초대장 보내기`(키 있을 때), 링크 복사, 영문 이름 · 날짜. (실링왁스 모노그램은 2026-09-14 사용자 요청으로 제거. `WaxSeal.tsx` 는 sealed hero 변형에서만 사용)
 
 파비콘: `src/app/icon.svg`(버건디 하트) + `apple-icon.png`(180, 흰 배경). 기본 Next 파비콘은 제거(2026-09-14).
