@@ -103,13 +103,17 @@ export const FEATURED = {
 
 const byId = new Map(manifest.map((p) => [p.id, withFocal(p as Omit<GalleryPhoto, "focal">)]));
 
-/** 갤러리에 보여줄 사진 (GALLERY_COUNT 장) */
+/**
+ * 갤러리에 보여줄 사진 (GALLERY_COUNT 장).
+ * ORDER 는 "어떤 사진을 넣을지" 만 정하고, 노출 순서는 원본 파일 번호순(MS_… → YS_…, 숫자 순)이다. (2026-09-14 사용자 요청)
+ */
 export const gallery: GalleryPhoto[] = [
   ...ORDER.map((id) => byId.get(id)).filter((p): p is GalleryPhoto => Boolean(p)),
   ...manifest.filter((p) => !ORDER.includes(p.id)).map((p) => byId.get(p.id)!),
 ]
   .filter((p) => !EXCLUDE.includes(p.id))
-  .slice(0, GALLERY_COUNT);
+  .slice(0, GALLERY_COUNT)
+  .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
 
 export function photo(id: string): GalleryPhoto {
   const p = byId.get(id);
