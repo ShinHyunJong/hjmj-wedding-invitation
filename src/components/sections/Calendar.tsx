@@ -14,7 +14,7 @@ export default function Calendar({ wedding }: { wedding: Wedding }) {
     <section className="px-8 pt-20 pb-24">
       <Reveal>
         <div className="text-center">
-          <p className="font-serif-en text-[26px] tracking-[0.06em] text-text">
+          <p className="font-sans text-[24px] font-light tracking-[0.1em] text-text tabular-nums">
             {date.year}.{String(date.month).padStart(2, "0")}.{String(date.day).padStart(2, "0")}
           </p>
           <p className="mt-2 text-[14px] text-text-sub">{timeLabel}</p>

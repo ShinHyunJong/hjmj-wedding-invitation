@@ -105,7 +105,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 | 역할 | 종이 청첩장 | 웹 대체 | 용도 |
 |---|---|---|---|
 | 영문 스크립트 | Snell Roundhand | **Pinyon Script** (Google Fonts), fallback: Great Vibes | "Wedding Day", "Invitation", "Location" 등 섹션 타이틀 |
-| 영문 세리프 | Californian FB | **Cormorant Garamond** (Google Fonts) | 날짜 `2026.11.22.`, 영문 이름, 소문구 |
+| 영문 세리프 | Californian FB | **Cormorant Garamond** (Google Fonts) | 영문 소문구(eyebrow) · 영문 이름. **숫자(날짜 · 시간 · 카운트다운 · 갤러리 n/28)는 2026-09-14부터 SUIT(font-sans, light, tabular-nums)** |
 | 한글 본문 | SUIT | **SUIT Variable** (CDN: sun-typeface/SUIT) | 본문, 안내 텍스트, 버튼 |
 | 한글 강조 | Arita-buri | **Noto Serif KR** 또는 Gowun Batang | 초대 문구 제목("결혼합니다."), 성함 |
 
@@ -131,7 +131,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 7. **Join Us** — 전폭 사진 1장만 (`FEATURED.middle`). 버건디 타이포 블록 `JOIN US / AS / WE / BECOME ONE …` 은 2026-09-14 어색하다는 피드백으로 **제거**.
 8. **Location** — eyebrow `LOCATION`, "오시는 길", 홀 이름(굵게) · 주소 · `Tel.` 링크, 네이버 지도(전폭), `약도 이미지 보기` 버튼(`public/images/map.png` 모달), **내비게이션** 소제목 + 버튼 3종(네이버지도 / 티맵 / 카카오내비), **지하철** · **주차** 안내(참고 사이트는 버스도 있으나 우리는 주차로 대체).
 9. **Notice** — eyebrow `NOTICE` + 안내 제목 + 본문 + 사진. 참고 사이트는 포토부스 안내. **우리 예식에 안내할 내용이 있는지 확인 필요.** 없으면 생략.
-10. **Gallery** — eyebrow `GALLERY`, "웨딩 갤러리". (2026-09-10 사용자 결정으로 교체) **대표 사진 1장(4:5, 스와이프 · 좌우 화살표 · `n / 20` 카운터) + 아래 4열 썸네일 20장**. 썸네일 탭 → 대표 사진 전환(버건디 링 표시), 대표 사진 탭 → 전체화면 라이트박스. `GALLERY_COUNT = 28`(2026-09-11 강아지 · 커플 컷 8장 추가). `ORDER` 는 선정 목록이고 노출 순서는 **원본 파일 번호순**(2026-09-14). 전체 사진을 다 보여주지 않는다.
+10. **Gallery** — eyebrow `GALLERY`, "웨딩 갤러리". (2026-09-10 사용자 결정으로 교체) **대표 사진 1장(4:5, 스와이프 · 좌우 화살표 · `n / 20` 카운터) + 아래 4열 썸네일 20장**. 썸네일 탭 → 대표 사진 전환(버건디 링 표시), 대표 사진 탭 → 전체화면 라이트박스. `GALLERY_COUNT = 28`(2026-09-11 강아지 · 커플 컷 8장 추가). `ORDER` 순서대로 노출. **촬영 장소별로 묶음**(2026-09-14: 화이트 스튜디오 → 강아지 스튜디오 → 다크 스튜디오 → 검은 문 건물 → 정원·클래식카 → 팜파스 → 소파 → 블랙 드레스). MS_/YS_ 는 작가 구분이라 섞임. 전체 사진을 다 보여주지 않는다.
 11. **Guestbook** — (2026-09-11 `features.guestbook = false` 로 **숨김**. 코드 · API 는 그대로) eyebrow `GUESTBOOK`, "방명록". 카드형 가로 스크롤(최근 10) + `작성하기`(이름 · 메시지 · 비밀번호 4~20자) / `전체보기`(더 보기 페이징) / 카드 × 로 본인 삭제(비밀번호). **구현됨** (`sections/Guestbook.tsx`).
 12. **Account** — eyebrow `ACCOUNT`, "마음 전하실 곳", 안내 3줄. `신랑측 계좌번호` / `신부측 계좌번호` **아코디언**(펼치면 예금주 + 복사 아이콘, 은행 · 계좌번호, 오른쪽에 카카오페이 노란 원형 버튼).
 13. **R.S.V.P.** — "참석 의사 전달", 설명 2줄, `참석의사 전달하기` 버튼 → **전체 화면 흐림 배경 폼**(`Modal variant="full"`, 참고 mZdJd64x2r): 참석 가능/불가 카드(체크 원), 성함 밑줄 입력 + 신랑측/신부측 라디오, 추가 인원 원형 ±(본인 제외, headcount = 1+추가), 개인정보 동의 카드, 다 채워야 버건디로 활성화되는 버튼. 팝업은 **없음**(2026-09-10 사용자 결정). 섹션은 **종이 카드 느낌의 패널**(같은 날 '너무 AI 같다' 피드백으로 띠 · 배지 · 아이콘 · 그림자 · 채운 버튼 제거): 크림 배경 + 얇은 이중 테두리, eyebrow `KINDLY REPLY`, 세리프 제목 "참석 의사를 **꼭** 전달해 주세요"(꼭 만 버건디), 설명 3줄, 짧은 구분선, `일시` `장소` 두 줄(회색 라벨), 공통 outlined 버튼. 강조는 타이포로만. **구현됨**, 2026-09-10 헤드리스로 제출까지 검증.
@@ -211,7 +211,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 
 ```
 pnpm dev          # 개발 서버 (package.json 에 --port 5400 고정. 카카오 Web 도메인도 localhost:5400 으로 등록)
-                  # Next 는 프로젝트당 dev 서버 1개만 허용. 사용자 서버가 떠 있으면 `pnpm build && pnpm exec next start -p 5401` 로 확인.
+                  # Next 는 프로젝트당 dev 서버 1개만 허용. 사용자 서버가 떠 있으면 `pnpm build && pnpm exec next start -p 5407` 로 확인 (5401 은 다른 프로젝트가 쓰는 경우가 있음 — 뜬 뒤 curl 로 `data-cd-target` 이 있는지 먼저 확인).
 pnpm build        # 프로덕션 빌드 (.next). 로컬 확인은 pnpm exec next start -p 5401
 pnpm typecheck    # tsc --noEmit
 pnpm lint         # eslint

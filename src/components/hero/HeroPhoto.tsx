@@ -9,7 +9,7 @@ export default function HeroPhoto({ wedding, photo }: HeroProps) {
   return (
     <section className="bg-bg pt-12">
       <div className="text-center">
-        <p className="font-serif-en text-[30px] leading-none tracking-[0.08em] text-text">
+        <p className="font-sans text-[26px] font-light leading-none tracking-[0.12em] text-text tabular-nums">
           {date.year} / {String(date.month).padStart(2, "0")} / {String(date.day).padStart(2, "0")}
         </p>
         <p className="eyebrow mt-3 text-[12px] text-text-sub">{date.weekdayEn}</p>

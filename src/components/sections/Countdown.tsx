@@ -36,12 +36,12 @@ export default function Countdown({ target, groomName, brideName }: Props) {
   // data-cd-* 속성은 정적 미리보기(scripts/build-preview.mjs)의 인라인 스크립트가 값을 채우는 데 쓴다.
   return (
     <div className="text-center" data-cd-target={target.toISOString()}>
-      <div className="flex items-end justify-center gap-3 font-serif-en text-text">
+      <div className="flex items-end justify-center gap-3 font-sans text-text">
         {cells.map(([label, value, key], i) => (
           <div key={label} className="flex items-end gap-3">
             <div className="flex flex-col items-center">
               <span className="eyebrow text-[10px] text-text-muted">{label}</span>
-              <span className="mt-1 min-w-[2.2ch] text-[30px] leading-none tabular-nums" data-cd={key}>
+              <span className="mt-1 min-w-[2.2ch] text-[28px] font-light leading-none tabular-nums" data-cd={key}>
                 {value}
               </span>
             </div>

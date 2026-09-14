@@ -61,7 +61,7 @@ export default function Gallery({ photos }: { photos: GalleryPhoto[] }) {
               ))}
             </div>
           </div>
-          <span className="pointer-events-none absolute right-7 bottom-3 rounded-full bg-text/45 px-2.5 py-1 font-serif-en text-[12px] tracking-[0.1em] text-white tabular-nums" aria-live="polite">
+          <span className="pointer-events-none absolute right-7 bottom-3 rounded-full bg-text/45 px-2.5 py-1 font-sans text-[11px] tracking-[0.08em] text-white tabular-nums" aria-live="polite">
             {index + 1} / {photos.length}
           </span>
           <NavArrow side="left" onClick={() => embla?.scrollPrev()} />
