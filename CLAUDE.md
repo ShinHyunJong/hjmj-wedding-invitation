@@ -126,6 +126,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 3. **Profile** — eyebrow `PROFILE`, "두 사람을 소개합니다." 신랑 · 신부 각각 사진 1장 + 이름 + 4줄 소개. 신랑은 사진 왼쪽/글 오른쪽, 신부는 반대로 엇갈림. **소개 문구는 사용자에게 받아야 함.**
 4. **Calendar** — `2026.11.22` + `일요일 오후 4시`, 11월 달력(일요일 · 22일 버건디, 22일은 채운 원), 위아래 가는 구분선. D-day 카운트다운 `DAYS : HOUR : MIN : SEC` + "민지, 현종의 결혼식이 N일 남았습니다."
    - 참고 사이트의 "함께 보낸 소중한 날 +N일"(사귄 날짜 카운터)은 선택. 포함하려면 시작일 필요.
+   - **캘린더에 저장**(2026-09-14, `sections/AddToCalendar.tsx`): 카운트다운 아래 버튼 → 시트에 `구글 캘린더에 추가`(calendar.google.com TEMPLATE 링크, KST→UTC 변환, 16:00~17:30) · `아이폰 · 기타 캘린더 (.ics)`(`public/wedding.ics`, Asia/Seoul, 하루 전 알림). 일시가 바뀌면 .ics 도 손으로 갱신.
 5. **Our story (SINCE)** — 사진 1장 + "Our story" 스크립트 + `이야기 시작하기` 버튼(타임라인 모달). 선택 섹션.
 6. ~~**Interview**~~ — **제외 확정** (2026-09-08 사용자 결정). 구현하지 않는다.
 7. **Join Us** — 전폭 사진 1장만 (`FEATURED.middle`). 버건디 타이포 블록 `JOIN US / AS / WE / BECOME ONE …` 은 2026-09-14 어색하다는 피드백으로 **제거**.
@@ -140,6 +141,8 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 16. **Save the Date** — 스크립트 "Save the Date"(버건디) + 한글 표 3행 `날짜 | 2026년 11월 22일 일요일`, `시간 | 오후 4시`, `장소 | 홀 이름 · 주소` (2026-09-10 사용자 요청으로 표 내용 전부 한글. 요일 · 오전/오후는 date 값에서 계산).
 17. **Ending** — 전폭 사진(2:3, `FEATURED.ending` + `endingPosition`) 위에 시. 상단은 흰색으로 페이드, 하단은 어둡게 페이드. 글은 세리프 한글 · 자간 0.14em · 줄간격 2.2 · 흰색, 아래에 출처. 문구는 `wedding.ending` (지금은 이수동 「사랑가」, **두 사람 문구로 교체 여부 확인**).
 18. **Footer** — `카카오톡으로 초대장 보내기`(키 있을 때), 링크 복사, 영문 이름 · 날짜. (실링왁스 모노그램은 2026-09-14 사용자 요청으로 제거. `WaxSeal.tsx` 는 sealed hero 변형에서만 사용)
+
+파비콘: `src/app/icon.svg`(버건디 하트) + `apple-icon.png`(180, 흰 배경). 기본 Next 파비콘은 제거(2026-09-14).
 
 구현됨: 1, 2, 4, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18. 순서: Gallery → Guestbook → Account → RSVP → Capture → Closing → Save the Date → Ending → Footer.
 사용자 확인 후 추가: 3(소개 문구), 5, 9. 6(Interview)은 제외.

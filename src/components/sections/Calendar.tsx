@@ -1,5 +1,6 @@
 import Reveal from "@/components/ui/Reveal";
 import Countdown from "./Countdown";
+import AddToCalendar from "./AddToCalendar";
 import { calendarGrid } from "@/lib/date";
 import { weddingDate, type Wedding } from "@/config/wedding";
 
@@ -64,6 +65,12 @@ export default function Calendar({ wedding }: { wedding: Wedding }) {
 
       <Reveal delay={120} className="mt-10">
         <Countdown target={weddingDate()} groomName={groom.name.slice(1)} brideName={bride.name.slice(1)} />
+      </Reveal>
+
+      <Reveal delay={160}>
+        <div className="mt-8 text-center">
+          <AddToCalendar wedding={wedding} />
+        </div>
       </Reveal>
     </section>
   );
