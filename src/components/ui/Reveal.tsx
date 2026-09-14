@@ -11,7 +11,9 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
  */
 export default function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [state, setState] = useState<"static" | "hidden" | "shown">("static");
+  // done: 애니메이션이 끝나면 인라인 스타일을 모두 지운다. transform 이 남아 있으면 안쪽의 position: fixed(모달) 가
+  // 뷰포트가 아니라 이 요소 기준으로 배치되는 문제가 생긴다.
+  const [state, setState] = useState<"static" | "hidden" | "shown" | "done">("static");
 
   useEffect(() => {
     const el = ref.current;
@@ -47,7 +49,14 @@ export default function Reveal({ children, className = "", delay = 0 }: { childr
         : undefined;
 
   return (
-    <div ref={ref} className={className} style={style}>
+    <div
+      ref={ref}
+      className={className}
+      style={style}
+      onTransitionEnd={(e) => {
+        if (state === "shown" && e.target === ref.current && e.propertyName === "transform") setState("done");
+      }}
+    >
       {children}
     </div>
   );
