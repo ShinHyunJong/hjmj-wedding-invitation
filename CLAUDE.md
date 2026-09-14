@@ -139,7 +139,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 15. **Closing** — 사진 3장을 세로로, 각 사진 왼쪽 아래에 스크립트 "Love story is beautiful, but ours is my favorite" 겹침.
 16. **Save the Date** — 스크립트 "Save the Date"(버건디) + 한글 표 3행 `날짜 | 2026년 11월 22일 일요일`, `시간 | 오후 4시`, `장소 | 홀 이름 · 주소` (2026-09-10 사용자 요청으로 표 내용 전부 한글. 요일 · 오전/오후는 date 값에서 계산).
 17. **Ending** — 전폭 사진(2:3, `FEATURED.ending` + `endingPosition`) 위에 시. 상단은 흰색으로 페이드, 하단은 어둡게 페이드. 글은 세리프 한글 · 자간 0.14em · 줄간격 2.2 · 흰색, 아래에 출처. 문구는 `wedding.ending` (지금은 이수동 「사랑가」, **두 사람 문구로 교체 여부 확인**).
-18. **Footer** — 실링왁스 모노그램, `카카오톡으로 초대장 보내기`(키 있을 때), 링크 복사, 영문 이름 · 날짜.
+18. **Footer** — `카카오톡으로 초대장 보내기`(키 있을 때), 링크 복사, 영문 이름 · 날짜. (실링왁스 모노그램은 2026-09-14 사용자 요청으로 제거. `WaxSeal.tsx` 는 sealed hero 변형에서만 사용)
 
 구현됨: 1, 2, 4, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18. 순서: Gallery → Guestbook → Account → RSVP → Capture → Closing → Save the Date → Ending → Footer.
 사용자 확인 후 추가: 3(소개 문구), 5, 9. 6(Interview)은 제외.

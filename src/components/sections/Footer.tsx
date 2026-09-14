@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import WaxSeal from "@/components/hero/WaxSeal";
 import { KAKAO_JS_KEY, loadKakaoSdk } from "@/lib/kakao";
 import type { Wedding } from "@/config/wedding";
 
@@ -40,9 +39,6 @@ export default function Footer({ wedding }: { wedding: Wedding }) {
 
   return (
     <footer className="bg-bg-tint px-8 pt-12 pb-14 text-center">
-      <div className="mb-10 flex justify-center">
-        <WaxSeal initials={wedding.monogram} className="h-[84px] w-[84px] drop-shadow-[0_5px_8px_rgba(150,20,33,0.25)]" />
-      </div>
       <div className="flex flex-col items-center gap-3">
         {KAKAO_JS_KEY && (
           <Button onClick={shareKakao} className="min-w-[220px] border-[#F7E600] bg-[#F7E600] text-[#1a1a1a] hover:border-[#F7E600] hover:text-[#1a1a1a]">
