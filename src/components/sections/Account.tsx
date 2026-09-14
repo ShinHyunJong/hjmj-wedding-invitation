@@ -5,10 +5,12 @@ import SectionTitle from "@/components/ui/SectionTitle";
 import Reveal from "@/components/ui/Reveal";
 import type { Account as AccountInfo, Wedding } from "@/config/wedding";
 
-/** 마음 전하실 곳. 신랑측/신부측 아코디언. 계좌가 하나도 없으면 섹션을 렌더링하지 않는다. */
+/** 마음 전하실 곳. 신랑측/신부측 목록(기본 펼침, 접기 가능). 계좌가 하나도 없으면 섹션을 렌더링하지 않는다. */
 export default function Account({ wedding }: { wedding: Wedding }) {
   const { groom, bride } = wedding.accounts;
-  const [open, setOpen] = useState<"groom" | "bride" | null>(null);
+  // 기본으로 둘 다 펼쳐 둔다 (2026-09-14 사용자 요청). 탭하면 접을 수 있다.
+  const [open, setOpen] = useState<{ groom: boolean; bride: boolean }>({ groom: true, bride: true });
+  const toggle = (k: "groom" | "bride") => setOpen((o) => ({ ...o, [k]: !o[k] }));
   if (groom.length === 0 && bride.length === 0) return null;
 
   return (
@@ -26,8 +28,8 @@ export default function Account({ wedding }: { wedding: Wedding }) {
 
       <Reveal delay={80}>
         <div className="mt-8 space-y-3">
-          {groom.length > 0 && <Group id="groom" label="신랑측 계좌번호" items={groom} open={open === "groom"} onToggle={() => setOpen(open === "groom" ? null : "groom")} />}
-          {bride.length > 0 && <Group id="bride" label="신부측 계좌번호" items={bride} open={open === "bride"} onToggle={() => setOpen(open === "bride" ? null : "bride")} />}
+          {groom.length > 0 && <Group id="groom" label="신랑측 계좌번호" items={groom} open={open.groom} onToggle={() => toggle("groom")} />}
+          {bride.length > 0 && <Group id="bride" label="신부측 계좌번호" items={bride} open={open.bride} onToggle={() => toggle("bride")} />}
         </div>
       </Reveal>
     </section>
