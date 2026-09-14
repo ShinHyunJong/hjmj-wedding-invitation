@@ -182,7 +182,7 @@ Arita-buri SemiBold(한글 세리프), SUIT Light/Medium/Bold(한글 산세리�
 - 사진 비율: 세로 54장, 가로 10장. 갤러리 대표 사진은 4:5 프레임에 세로는 cover, 가로는 contain(크림 여백). 썸네일은 정사각 cover. 라이트박스는 원본 비율.
 - `액자 크기 크롭본/`은 액자 인쇄용 복제본이므로 웹에서는 사용하지 않는다.
 - 약도: PDF 4페이지에서 300dpi로 추출한 `public/images/map.png` (756 × 456) 사용. assets의 카카오톡 캡처 PNG는 저해상도라 쓰지 않는다.
-- OG 이미지(`public/images/og.jpg`, 1200 × 630)는 아직 없음. 카카오 공유 구현 시 생성.
+- OG 이미지: `public/images/og.jpg` (1200 × 630, hero 컷 YS_04054 중앙 크롭). `layout.tsx` 의 `metadataBase` 는 `NEXT_PUBLIC_SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → `VERCEL_URL` 순으로 잡히므로 Vercel 에서는 설정 없이 배포 도메인이 들어간다(2026-09-14 검증). 커스텀 도메인을 붙이면 `NEXT_PUBLIC_SITE_URL` 로 고정 권장. twitter:card 도 포함.
 
 ---
 
