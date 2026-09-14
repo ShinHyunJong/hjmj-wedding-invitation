@@ -39,7 +39,8 @@ export default function Ending({
         style={{
           background: light
             ? "linear-gradient(to bottom, var(--color-bg) 0%, rgba(255,255,255,0) 20%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.88) 100%)"
-            : "linear-gradient(to bottom, var(--color-bg) 0%, rgba(255,255,255,0) 20%, rgba(35,31,32,0) 52%, rgba(35,31,32,0.72) 100%)",
+            : // 사진 전체에 은은한 검은 오버레이 + 하단은 더 어둡게 (흰 글씨 가독성)
+              "linear-gradient(to bottom, var(--color-bg) 0%, rgba(255,255,255,0) 16%, rgba(35,31,32,0.22) 30%, rgba(35,31,32,0.34) 60%, rgba(35,31,32,0.78) 100%)",
         }}
         aria-hidden
       />
