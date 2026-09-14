@@ -36,7 +36,7 @@ export default function Account({ wedding }: { wedding: Wedding }) {
   );
 }
 
-function Group({ id, label, items, open, onToggle }: { id: string; label: string; items: readonly AccountInfo[]; open: boolean; onToggle: () => void }) {
+function Group({ id, label, items, open, onToggle }: { id: "groom" | "bride"; label: string; items: readonly AccountInfo[]; open: boolean; onToggle: () => void }) {
   return (
     <div className="overflow-hidden rounded-xl bg-bg-tint">
       <button
@@ -54,7 +54,7 @@ function Group({ id, label, items, open, onToggle }: { id: string; label: string
       {open && (
         <ul id={`acc-${id}`} className="space-y-2 px-3 pb-3">
           {items.map((a) => (
-            <AccountRow key={a.number} account={a} />
+            <AccountRow key={a.number} account={a} side={id === "groom" ? "신랑" : "신부"} />
           ))}
         </ul>
       )}
@@ -62,7 +62,9 @@ function Group({ id, label, items, open, onToggle }: { id: string; label: string
   );
 }
 
-function AccountRow({ account }: { account: AccountInfo }) {
+function AccountRow({ account, side }: { account: AccountInfo; side: "신랑" | "신부" }) {
+  // "신랑" · "신랑 아버지" · "신부 어머니" 처럼 관계를 이름 앞에 작게 표시
+  const relation = account.role === "본인" ? side : `${side} ${account.role}`;
   const [copied, setCopied] = useState(false);
   async function copy() {
     try {
@@ -76,7 +78,10 @@ function AccountRow({ account }: { account: AccountInfo }) {
   return (
     <li className="flex items-center justify-between gap-3 rounded-lg bg-bg px-4 py-3">
       <div className="min-w-0">
-        <p className="text-[14px] font-medium text-text">{account.holder}</p>
+        <p className="text-[14px] text-text">
+          <span className="mr-1.5 text-[12px] text-text-muted">{relation}</span>
+          <span className="font-medium">{account.holder}</span>
+        </p>
         <p className="mt-0.5 text-[14px] tabular-nums text-text-sub">
           {account.bank} {account.number}
         </p>

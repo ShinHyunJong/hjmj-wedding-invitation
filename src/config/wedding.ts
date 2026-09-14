@@ -23,6 +23,8 @@ export interface Parent extends Person {
 export interface Account {
   /** 예금주 */
   holder: string;
+  /** 예금주 관계: 본인(신랑/신부) · 아버지 · 어머니. 계좌 행에 "신랑 아버지" 처럼 표시 */
+  role: "본인" | "아버지" | "어머니";
   bank: string;
   number: string;
   /** 카카오페이 송금 링크 (선택) */
@@ -111,13 +113,13 @@ export const wedding = {
 
   accounts: {
     groom: [
-      { holder: "신현종", bank: "국민은행", number: "613402-04-035602" },
-      { holder: "신승원", bank: "NH농협", number: "1292-12-00003-2" },
-      { holder: "김숙자", bank: "NH농협", number: "3561576962913" },
+      { holder: "신현종", role: "본인", bank: "국민은행", number: "613402-04-035602" },
+      { holder: "신승원", role: "아버지", bank: "NH농협", number: "1292-12-00003-2" },
+      { holder: "김숙자", role: "어머니", bank: "NH농협", number: "3561576962913" },
     ] as Account[],
     bride: [
-      { holder: "강민지", bank: "신한은행", number: "110-426-862194" },
-      { holder: "김애경", bank: "신한은행", number: "354-02-184220" },
+      { holder: "강민지", role: "본인", bank: "신한은행", number: "110-426-862194" },
+      { holder: "김애경", role: "어머니", bank: "신한은행", number: "354-02-184220" },
     ] as Account[],
   },
 
