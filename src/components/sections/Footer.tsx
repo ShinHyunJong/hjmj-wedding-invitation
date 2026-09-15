@@ -23,8 +23,11 @@ export default function Footer({ wedding }: { wedding: Wedding }) {
   async function shareKakao() {
     const sdk = await loadKakaoSdk();
     if (!sdk) return setShareError(true);
-    const url = window.location.origin + window.location.pathname;
-    const imageUrl = new URL(wedding.share.image, window.location.origin).toString();
+    // 공유 링크 도메인: NEXT_PUBLIC_SITE_URL 이 있으면 그것(커스텀 도메인), 없으면 현재 주소.
+    // 카카오는 앱의 [플랫폼 → Web → 사이트 도메인] 에 등록된 도메인만 링크로 허용한다. 미등록이면 등록된 첫 도메인으로 바뀌어 버린다.
+    const origin = (process.env.NEXT_PUBLIC_SITE_URL ?? window.location.origin).replace(/\/$/, "");
+    const url = origin + window.location.pathname;
+    const imageUrl = new URL(wedding.share.image, origin).toString();
     sdk.Share.sendDefault({
       objectType: "feed",
       content: {
